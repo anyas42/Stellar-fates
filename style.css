@@ -6,7 +6,7 @@
   --font-title: 'Cinzel Decorative', serif;
   --font-sub: 'Cinzel', serif;
   --font-body: 'Montserrat', sans-serif;
-  --bg-image: url('assets/Starting.jpg'); /* UPDATED: Background image path */
+  --bg-image: url('Starting.jpg'); /* UPDATED: Background image path */
 }
 
 /* --- Add this entire block to your style.css file --- */
@@ -1228,7 +1228,7 @@ nav a:hover {
 
 .intuition-card-front {
     /* Set your new card back image here */
-    background-image: url('assets/intuition_card_back.jpg');
+    background-image: url('intuition_card_back.jpg');
     background-size: cover;
     background-position: center;
 }
