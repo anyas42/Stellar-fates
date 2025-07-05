@@ -1,0 +1,1300 @@
+:root {
+  --yellow: #ffe26f;
+  --blue: #69b7ff;
+  --white: #ffffff;
+  --purple: #9B59B6;
+  --font-title: 'Cinzel Decorative', serif;
+  --font-sub: 'Cinzel', serif;
+  --font-body: 'Montserrat', sans-serif;
+  --bg-image: url('assets/Starting.jpg'); /* UPDATED: Background image path */
+}
+
+/* --- Add this entire block to your style.css file --- */
+
+/* Global Header Styles */
+.global-header {
+    position: fixed; /* Makes the header stick to the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex; /* This enables flexbox */
+    justify-content: space-between; /* Pushes children to opposite ends (logo left, nav right) */
+    align-items: center; /* Vertically centers items */
+    padding: 1rem 5%; /* Adjust padding as needed for space from edges */
+    background: rgba(13, 6, 23, 0.9); /* Dark background with some transparency */
+    backdrop-filter: blur(8px); /* Optional: blur effect for modern look */
+    z-index: 1000; /* Ensure it stays on top of other content */
+    box-shadow: 0 2px 15px rgba(0,0,0,0.4); /* Subtle shadow */
+}
+
+.global-header .logo {
+    font-family: var(--font-title);
+    font-size: 2.5rem; /* Match splash title size */
+    color: var(--yellow); /* Match your theme */
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 226, 111, 0.5);
+    transition: color 0.3s ease;
+}
+
+.global-header .logo:hover {
+    color: #ffc107;
+}
+
+.global-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Make nav items flex to align them horizontally */
+    gap: 2rem; /* Space between nav items */
+}
+
+.global-header nav a {
+    font-family: var(--font-sub);
+    font-size: 1.1rem;
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
+}
+
+.global-header nav a:hover {
+    color: var(--yellow);
+    transform: translateY(-2px);
+}
+
+.global-header nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--yellow);
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.global-header nav a:hover::after {
+    width: 100%;
+}
+
+/* Important: Adjust padding on body so content isn't hidden behind fixed header */
+body {
+    padding-top: 80px; /* Adjust this value to be slightly more than your header's height (e.g., if header height is ~70px) */
+}
+
+/* Responsive adjustments for global header */
+@media (max-width: 768px) {
+    .global-header {
+        flex-direction: column; /* Stack logo and nav vertically on smaller screens */
+        padding: 1rem 3%;
+        gap: 0.5rem;
+    }
+    .global-header .logo {
+        font-size: 2rem;
+    }
+    .global-header nav ul {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .global-header nav a {
+        font-size: 1rem;
+    }
+    body {
+        padding-top: 120px; /* More padding if header wraps to two lines */
+    }
+}
+
+@media (max-width: 480px) {
+    .global-header .logo {
+        font-size: 1.8rem;
+    }
+    .global-header nav ul {
+        flex-direction: column; /* Stack nav items vertically on very small screens */
+        gap: 0.5rem;
+        align-items: center; /* Center the stacked links */
+    }
+    .global-header nav a {
+        font-size: 0.9rem;
+    }
+    body {
+        padding-top: 150px; /* Even more padding for stacked header */
+    }
+}
+
+html,body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: var(--font-body);
+  color: var(--white);
+  background: var(--bg-image) no-repeat center center fixed;
+  background-size: cover;
+  /* Ambient Particles */
+  position: relative; /* Needed for pseudo-element positioning */
+}
+
+/* Ambient Particles Effect */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: -1;
+  /* Particle animation */
+  background-image: radial-gradient(circle at top left, rgba(255, 255, 255, 0.05) 1px, transparent 0),
+                    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 50px 50px; /* Size of the repeating pattern */
+  animation: cosmicDrift 60s linear infinite;
+}
+
+@keyframes cosmicDrift {
+  from { background-position: 0 0; }
+  to { background-position: 100% 100%; }
+}
+
+
+/* All main sections are positioned relative and z-indexed to appear above the overlay */
+.splash, .homepage, .card-reading-section, .select-date-section, .about-section, #mini-games-section {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Utility classes for showing/hiding with fade effect */
+.hidden {
+  display: none !important; /* Forces element to be hidden */
+}
+.fade-wrapper {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* Smooth fade effect */
+}
+.fade-wrapper.visible {
+  opacity: 1;
+}
+
+.header, .footer-hint {
+  backdrop-filter: blur(10px);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  background: rgba(30, 15, 50, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logo {
+  font-family: var(--font-title); /* UPDATED: Font for logo */
+  font-size: 1.3rem;
+  color: var(--yellow);
+  text-decoration: none; /* Ensure link doesn't have underline */
+  cursor: pointer;
+}
+.logo:hover {
+    color: var(--white); /* Subtle hover effect for logo */
+}
+
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+nav a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+}
+nav a:hover {
+  color: var(--yellow);
+}
+
+/* Splash Screen specific styles */
+.splash-title {
+  font-family: var(--font-title); /* UPDATED: Font for splash title */
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.splash-tagline {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  max-width: 800px;
+}
+
+/* Homepage specific styles */
+.homepage .content-wrapper {
+    max-width: 900px;
+}
+.homepage .subheading {
+    font-family: var(--font-title);
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+.homepage .tagline {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+.homepage .btn-group button {
+    background-color: var(--yellow);
+    color: #333;
+    border: none;
+    padding: 0.8rem 2rem;
+    margin: 0 1rem;
+    border-radius: 8px;
+    font-family: var(--font-sub);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.homepage .btn-group button:hover {
+    background-color: #ffc107;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* --- Select Date Section Styles --- */
+.select-date-section {
+    justify-content: flex-start;
+    padding-top: 120px;
+    text-align: center;
+}
+
+.select-date-section .date-selection-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.select-date-section .instruction {
+    font-size: 1.5rem;
+    font-family: var(--font-title);
+    color: var(--white);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Moon Phase Display */
+.moon-phase-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2.5rem; /* Emoji size */
+    color: var(--white);
+    margin-bottom: 1rem;
+    font-family: var(--font-body);
+    text-align: center;
+}
+
+.moon-phase-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+#date-picker {
+    padding: 0.8rem 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    width: 250px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#date-picker:focus {
+    outline: none;
+    border-color: var(--yellow);
+    box-shadow: 0 0 15px rgba(255, 226, 111, 0.4);
+    text-align: center;
+}
+
+/* SURPRISE ME! Button specific styles, similar to .deck */
+.surprise-me-btn {
+  margin-top: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 2.5rem;
+  border-radius: 8px;
+  font-family: var(--font-sub);
+  font-weight: bold;
+  color: var(--yellow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.surprise-me-btn:hover {
+  transform: translateY(-3px);
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.surprise-me-btn:active {
+  transform: translateY(0);
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+}
+
+/* --- Pikaday Custom Styles - AGGRESSIVE ALL-DARK BACKGROUND FIX --- */
+.pika-single {
+    background: rgba(30, 15, 50, 0.98) !important; /* Slightly more opaque base */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5) !important;
+    font-family: var(--font-body) !important;
+    color: var(--white) !important;
+    z-index: 9999 !important;
+    background-clip: padding-box !important;
+}
+
+/* Force ALL elements inside Pikaday to have a dark background and white text */
+.pika-single *,
+.pika-single > div,
+.pika-single > span,
+.pika-single > table,
+.pika-single > table > tbody,
+.pika-single > table > thead,
+.pika-single > table > tfoot,
+.pika-single th,
+.pika-single td,
+.pika-single select,
+.pika-single option,
+.pika-single input {
+    background-color: rgba(30, 15, 50, 1) !important; /* Solid dark background for everything */
+    color: var(--white) !important; /* Force text to white for everything */
+    border-color: rgba(255, 255, 255, 0.1) !important; /* Consistent border color */
+}
+
+/* Re-apply specific styles for elements that need different colors or transparent backgrounds */
+
+.pika-label {
+    background-color: transparent !important; /* Don't want label itself to have dark background */
+    color: var(--white) !important;
+}
+
+.pika-prev, .pika-next {
+    background-color: transparent !important;
+    color: var(--yellow) !important;
+    opacity: 0.8;
+}
+.pika-prev:hover, .pika-next:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    opacity: 1;
+}
+
+.pika-button {
+    background-color: transparent !important; /* Buttons should be transparent normally */
+    color: var(--white) !important;
+    border: none !important;
+    border-radius: 4px !important;
+    transition: background-color 0.2s ease !important;
+}
+.pika-button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.pika-button.is-today {
+    color: var(--yellow) !important;
+    font-weight: bold;
+}
+
+.pika-button.is-selected {
+    background-color: var(--yellow) !important;
+    color: #333 !important; /* Text on selected should be dark */
+    font-weight: bold;
+}
+
+/* Specific styling for the select dropdowns */
+.pika-select {
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 4px !important;
+    font-size: 0.9em !important;
+    padding: 2px 4px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+}
+
+/* Ensure options are styled correctly when the select dropdown is opened */
+.pika-select option {
+    background-color: rgba(30, 15, 50, 1) !important;
+    color: var(--white) !important;
+    padding: 5px 10px !important;
+}
+
+/* Make sure the label context (containing month/year) itself is transparent */
+.pika-lendar .pika-label-context {
+    background-color: transparent !important;
+}
+
+/* Ensure day names (Sun, Mon, etc.) are white */
+.pika-table th {
+    color: var(--white) !important;
+    background-color: rgba(30, 15, 50, 1) !important;
+}
+
+/* Specific styling for disabled days/buttons */
+.pika-button.is-disabled {
+    color: rgba(255, 255, 255, 0.4) !important;
+    background-color: transparent !important;
+}
+.pika-button.is-disabled:hover {
+    background-color: transparent !important;
+}
+
+/* --- END Pikaday Custom Styles --- */
+
+/* Card Reading Section specific styles */
+.card-reading-section {
+    justify-content: flex-start;
+    padding-top: 120px;
+}
+
+/* Card Area specific styles */
+.card-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.instruction {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-family: var(--font-sub);
+}
+
+/* Shuffle Deck Button */
+.deck {
+  margin: 1.2rem auto;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  font-family: var(--font-sub);
+  font-weight: bold;
+  color: var(--yellow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.deck:hover {
+  transform: scale(1.05);
+}
+.deck:active {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: var(--blue);
+  transform: scale(0.96);
+}
+
+/* --- Card Specific Styles (Enhancements) --- */
+.card {
+  flex: 0 0 115px; /* Slightly increased initial size */
+  width: 115px; /* Slightly increased initial width */
+  height: 160px; /* Slightly increased initial height (maintaining aspect ratio) */
+  perspective: 2500px;
+  position: relative;
+  transform-style: preserve-3d;
+  /* Removed box-shadow and filter from here */
+  transition: width 0.4s ease, height 0.4s ease, flex-basis 0.4s ease,
+              transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Card Faces (front and back) */
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Add common outline properties here, but make it transparent initially */
+  box-shadow: 0 0 0 3px transparent, 0 0 0 transparent; /* Base for outline */
+  transition: box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.card-front {
+  background-image: url('assets/card.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.card-back {
+  background-color: rgba(0, 0, 0, 0.85);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: var(--font-body);
+  padding: 0.8rem; /* Slightly reduced padding on back */
+  box-sizing: border-box;
+  color: var(--white);
+  font-size: 0.85rem; /* Slightly smaller font on back */
+  line-height: 1.3; /* Slightly tighter line height on back */
+  overflow: hidden;
+}
+
+/* Enhanced Card Hover Effects */
+/* Apply hover effects to the .card element for general transformations */
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    cursor: pointer;
+    position: relative;
+    z-index: 15;
+}
+
+/* Apply the yellow outline and glow to the specific card face on hover */
+.card:not(.selected):hover .card-front,
+.card:not(.selected):hover .card-back {
+    box-shadow: 0 0 0 3px var(--yellow), 0 0 20px rgba(255, 226, 111, 0.7);
+    filter: drop-shadow(0 0 10px rgba(255, 226, 111, 0.5));
+}
+
+
+/* Shimmer effect on hover */
+.card-front::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: skewX(-20deg);
+    transition: none; /* Reset transition for shimmer */
+    opacity: 0;
+}
+
+.card:hover .card-front::after {
+    animation: shimmer 0.8s forwards;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { left: 150%; opacity: 0; }
+}
+
+
+/* Improved Card Dealing/Shuffling Visuals */
+.card.shuffle-in {
+  transform: scale(0.2) rotate(30deg); /* Start smaller and rotated */
+  opacity: 0;
+  animation: shufflePop 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* More bouncy animation */
+}
+
+@keyframes shufflePop {
+  0% { transform: scale(0.2) rotate(30deg); opacity: 0; }
+  50% { transform: scale(1.1) rotate(-10deg); opacity: 0.8; } /* Overshoot */
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  border-radius: 12px;
+  transform-origin: center center; /* ADDED: Explicitly set transform origin for precise flipping */
+}
+
+/* MODIFIED: Reverted .card-inner.flipped scale for better overall sizing */
+/* The parent .card.selected in reveal-mode now handles the size change */
+.card .card-inner.flipped {
+  transform: rotateY(180deg); /* Only flip, no scale here */
+}
+
+/* Style for selected cards */
+/* Apply the outline directly to the faces when the parent card is selected */
+.card.selected .card-front,
+.card.selected .card-back {
+  box-shadow: 0 0 0 3px var(--yellow), 0 0 20px var(--yellow);
+  z-index: 10; /* Ensure selected card is above others */
+}
+
+/* Dramatic Reveal Transition */
+.card.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5) translateY(50px); /* Shrink and slide down */
+  transition: all 0.5s ease-out;
+}
+
+/* MODIFIED: Card Container for flex layout - Adjusted for horizontal reveal */
+.card-container {
+  display: flex; /* Default flex for non-reveal mode */
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.8rem; /* Adjusted gap */
+  flex-wrap: wrap;
+  padding: 1rem;
+  max-width: 90%;
+  margin-top: 1rem;
+  overflow: hidden; /* Default for non-reveal mode */
+  transition: all 0.4s ease;
+}
+
+/* MODIFIED: Reveal Mode for horizontal layout using flexbox */
+.card-container.reveal-mode {
+  display: flex; /* Changed to flexbox for side-by-side */
+  flex-direction: row; /* Arrange items horizontally */
+  justify-content: center; /* Center the cards horizontally */
+  align-items: flex-start; /* Align cards to the top of the container */
+  gap: 2rem; /* Space between the revealed cards */
+  flex-wrap: wrap; /* Allow cards to wrap to the next line if space is limited */
+
+  /* Ensure no lingering grid properties */
+  grid-template-columns: initial !important;
+  grid-auto-rows: initial !important;
+  grid-column: initial !important;
+  grid-row: initial !important;
+
+  max-width: 900px; /* Control max width of the flex container itself */
+  width: 90%; /* Make flex container responsive */
+  margin: 0 auto; /* Center the flex container horizontally within card-reading-section */
+  padding: 0; /* Let cards handle their own padding/margins if needed */
+  box-sizing: border-box;
+  overflow: visible; /* Allow box-shadows to render fully without cropping */
+  transition: all 0.6s ease; /* Ensure container transitions smoothly */
+}
+
+/* MODIFIED: Style for selected cards when in reveal mode (all 3 will be larger) */
+.card-container.reveal-mode .card.selected {
+  flex: 0 0 auto; /* Allow cards to size based on content, but not grow/shrink */
+  width: 200px; /* Fixed width for revealed cards on desktop */
+  height: auto;
+  aspect-ratio: 1 / 1.4; /* Maintain tarot card aspect ratio */
+  margin: 0; /* Reset margins */
+  transform: translateY(0) scale(1);
+  z-index: 100;
+  /* transition property is handled by base .card or parent */
+
+  /* Ensure no lingering grid properties on individual cards */
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+
+/* Ensure the outlines are applied to the faces of the revealed cards */
+.card-container.reveal-mode .card.selected .card-front,
+.card-container.reveal-mode .card.selected .card-back {
+    box-shadow: 0 0 0 4px var(--yellow), 0 0 30px var(--yellow);
+}
+
+/* MODIFIED: Adjust the card-back padding/font for the new larger revealed size */
+.card-container.reveal-mode .card.selected .card-back {
+    padding: 1.8rem; /* Slightly reduced padding to ensure text fits */
+    font-size: 0.95rem; /* Slightly smaller base font size */
+    line-height: 1.5; /* Slightly tighter line height */
+}
+.card-container.reveal-mode .card.selected .card-back h3 {
+    font-size: 1.3rem; /* Slightly smaller heading */
+    margin-bottom: 0.7rem;
+}
+.card-container.reveal-mode .card.selected .card-back p:first-of-type { /* For the event line */
+    font-size: 0.9rem; /* Slightly smaller for event text */
+    margin-bottom: 0.7rem;
+}
+.card-container.reveal-mode .card.selected .card-back p:last-of-type { /* For the main message */
+    font-size: 0.85rem; /* Slightly smaller for main message */
+    margin-bottom: 0.4rem;
+    max-width: 95%; /* Ensure text doesn't hit edges */
+}
+
+
+/* Reveal Button */
+.reveal-button {
+  margin: 2rem 0;
+  padding: 0.8rem 2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--yellow);
+  font-family: var(--font-sub);
+  font-weight: 600;
+  cursor: pointer;
+  display: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  border: none;
+}
+
+.reveal-button:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Footer Hint */
+.footer-hint {
+  text-align: center;
+  margin: 2rem 0 1rem;
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--blue);
+  opacity: 0.8;
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+}
+
+/* NEW: Glassy content box for multiple sections */
+.content-box {
+    max-width: 800px;
+    width: 90%;
+    margin: 0 auto;
+    background: rgba(30, 15, 50, 0.7);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
+}
+
+
+/* --- About Section Styles --- */
+.about-section {
+    justify-content: flex-start; /* Align content to the top, under the header */
+    padding-top: 120px; /* Space for the header */
+    padding-bottom: 50px; /* Space for the footer hint */
+}
+
+/* ABOUT CONTENT IS NOW .content-box */
+.about-heading {
+    font-family: var(--font-title);
+    font-size: 2.8rem;
+    color: var(--yellow);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px rgba(255, 226, 111, 0.6); /* Glow effect */
+    text-align: center;
+}
+
+.about-description {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--white);
+    margin-bottom: 2rem;
+    text-align: left; /* Align text within description for readability */
+}
+
+.archetype-highlight {
+    font-weight: bold;
+    color: var(--yellow); /* Highlight archetypes in yellow */
+}
+
+/* Discover Your Reading Button - Similar to homepage buttons */
+.discover-reading-btn {
+    background-color: var(--yellow);
+    color: #333;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+    font-family: var(--font-sub);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.discover-reading-btn:hover {
+    background-color: #ffc107;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Image Carousel Styles */
+.image-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Max width for carousel */
+    height: 350px; /* Fixed height for carousel */
+    margin: 2.5rem auto;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure images cover the area */
+    flex-shrink: 0; /* Prevent images from shrinking */
+}
+
+.carousel-nav {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.carousel-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    padding-bottom: 2px; /* Visual adjustment for arrows */
+}
+
+.carousel-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.carousel-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+    background-color: var(--yellow);
+    transform: scale(1.2);
+}
+
+/* --- Media Queries for Responsive Card Sizing --- */
+@media (max-width: 768px) {
+    .card-container.reveal-mode {
+        gap: 1.5rem; /* Adjusted gap for tablets */
+        flex-direction: column; /* Stack vertically on tablets */
+        max-width: 300px; /* Max width for stacked cards */
+    }
+    .card-container.reveal-mode .card.selected {
+        width: 180px; /* Reduced width for tablet */
+        aspect-ratio: 1 / 1.4;
+    }
+    .card-container.reveal-mode .card.selected .card-back {
+        padding: 1.2rem;
+        font-size: 0.85rem;
+    }
+    .card-container.reveal-mode .card.selected .card-back h3 {
+        font-size: 1.1rem;
+    }
+    .card-container.reveal-mode .card.selected .card-back p:first-of-type,
+    .card-container.reveal-mode .card.selected .card-back p:last-of-type {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container.reveal-mode {
+        gap: 1rem; /* Adjusted gap for mobile */
+        flex-direction: column; /* Ensure stacking on mobile */
+        max-width: 250px; /* Max width for mobile cards */
+    }
+    .card-container.reveal-mode .card.selected {
+        width: 150px; /* Smaller width for mobile cards */
+        aspect-ratio: 1 / 1.4;
+    }
+    .card-container.reveal-mode .card.selected .card-back {
+        padding: 1rem;
+        font-size: 0.75rem;
+        line-height: 1.3;
+    }
+    .card-container.reveal-mode .card.selected .card-back h3 {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+    .card-container.reveal-mode .card.selected .card-back p:first-of-type,
+    .card-container.reveal-mode .card.selected .card-back p:last-of-type {
+        font-size: 0.65rem;
+    }
+}
+
+/* --- Mini-Games Section Styles --- */
+#mini-games-section {
+    justify-content: flex-start; /* Align content to the top, under the header */
+    padding-top: 100px; /* Space for header */
+    padding-bottom: 50px; /* Space for footer */
+    box-sizing: border-box;
+    overflow-y: auto; /* Allow scrolling if content is tall */
+}
+
+/* Mini-Games Menu */
+.mini-games-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(30, 15, 50, 0.7);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
+    max-width: 600px;
+    width: 90%;
+    margin-top: 2rem;
+}
+
+.mini-games-menu .subheading {
+    font-family: var(--font-title);
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: var(--yellow);
+}
+
+.game-selection-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Common button styles for mini-games */
+.game-select-btn, .btn-primary, .btn-secondary {
+    background-color: var(--yellow);
+    color: #333;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-family: var(--font-sub);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.game-select-btn:hover, .btn-primary:hover {
+    background-color: #ffc107;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--yellow);
+}
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* Individual Game Container (common for all games) */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(30, 15, 50, 0.7);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
+    max-width: 800px;
+    width: 90%;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.game-title {
+    font-family: var(--font-title);
+    font-size: 2.5rem;
+    color: var(--yellow);
+    margin-bottom: 0.5rem;
+}
+
+.game-instructions {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+
+.game-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--white);
+}
+
+.game-outcome {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 226, 111, 0.1);
+    border: 1px solid var(--yellow);
+    border-radius: 10px;
+    text-align: center;
+}
+.game-outcome h3 {
+    font-family: var(--font-sub);
+    color: var(--yellow);
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+}
+.game-outcome p {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+
+/* Celestial Match Specific Styles */
+.match-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns for desktop */
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px; /* Adjust grid size */
+    margin: 0 auto;
+}
+
+.match-card {
+    width: 100%;
+    aspect-ratio: 1 / 1.2; /* Slightly taller than square for card look */
+    background-color: rgba(255, 255, 255, 0.1); /* Background when not flipped */
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease, background-color 0.2s ease, border 0.2s ease, filter 0.4s ease, opacity 0.4s ease;
+    border: 2px solid transparent; /* For selected state */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.match-card:hover:not(.flipped):not(.matched) {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--yellow);
+}
+
+.match-card .card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+.match-card.flipped-parent {
+    pointer-events: none;
+}
+
+
+.match-card-front, .match-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem; /* For emoji/text symbols */
+    color: var(--white);
+    overflow: hidden;
+}
+
+.match-card-front {
+    background-color: #3a2a51; /* Dark purple/blue */
+    background-image: url('assets/game_card_back.jpg');
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.match-card-back {
+    background-color: #0d0617; /* Very dark, almost black */
+    transform: rotateY(180deg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.match-card-back img { /* If you use images instead of emojis */
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+/* --- NEW: Intuition Test Game Styles --- */
+.intuition-cards {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+.intuition-card {
+    width: 150px;
+    height: 210px;
+    perspective: 1000px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.intuition-card:hover {
+    transform: translateY(-10px);
+}
+
+.intuition-card .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+}
+
+.intuition-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.intuition-card-front, .intuition-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    color: var(--white);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.intuition-card-front {
+    /* Set your new card back image here */
+    background-image: url('assets/intuition_card_back.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.intuition-card-back {
+    background-color: #1a0e2a; /* Dark purple */
+    transform: rotateY(180deg);
+}
+
+/* Add a glowing effect for the winning card */
+.intuition-card.winner .intuition-card-back {
+    box-shadow: 0 0 30px var(--yellow), 0 0 15px var(--yellow) inset;
+    border-color: var(--yellow);
+}
+
+
+/* Responsive adjustments for Mini-Games */
+@media (max-width: 768px) {
+    .mini-games-menu .subheading, .game-title {
+        font-size: 1.8rem;
+    }
+    .game-instructions, .game-controls p {
+        font-size: 1rem;
+    }
+    .match-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on tablet */
+        gap: 0.8rem;
+    }
+    .match-card-back {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .mini-games-menu .subheading, .game-title {
+        font-size: 1.5rem;
+    }
+    .game-selection-buttons {
+        flex-direction: column;
+    }
+    .game-select-btn, .btn-primary, .btn-secondary {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    .match-grid {
+        grid-template-columns: repeat(3, 1fr); /* Still 3 columns on mobile for smaller grids */
+        gap: 0.5rem;
+    }
+    .match-card-back {
+        font-size: 1.5rem;
+    }
+    .game-outcome h3 {
+        font-size: 1.4rem;
+    }
+    .game-outcome p {
+        font-size: 0.9rem;
+    }
+    /* Intuition Game on Mobile */
+    .intuition-cards {
+        gap: 1rem;
+    }
+    .intuition-card {
+        width: 100px;
+        height: 140px;
+    }
+    .intuition-card-back {
+        font-size: 3rem;
+    }
+}

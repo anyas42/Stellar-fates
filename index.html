@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stellar Fates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <audio id="bg-music" autoplay loop>
+    <source src="assets/bgmusic.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <section class="splash fade-wrapper visible">
+    <h1 class="splash-title">
+      <span style="color: #ffffff;">Stellar</span> <span style="color: #ffe26f;">Fates</span>
+    </h1>
+    <p class="splash-tagline">
+      THE STARS REMEMBER. WHAT WILL THEY REVEAL WHEN YOU CHOOSE YOUR FATE?
+    </p>
+  </section>
+
+  <main class="homepage hidden fade-wrapper">
+    <div class="content-wrapper">
+      <div class="text-block">
+        <h2 class="subheading">
+          CHOOSE. <span style="color: #9B59B6;">REVEAL.</span> <br />
+          REMEMBER. <span style="color: #ffe26f;">TRANSCEND.</span><br />
+        </h2>
+        <p class="tagline">
+          A mystical cosmic portal to astrological secrets and storytelling.<br>
+          Discover real space events hidden in the stars of your chosen date.<br>
+          Your fate isn't written in the cards — it's written in the cosmos.
+        </p>
+        <div class="btn-group">
+          <button id="readingBtn">Reveal Today's Fate</button>
+          <button id="aboutBtn">Know More</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section class="select-date-section hidden fade-wrapper">
+    <div class="header">
+        <a href="#" id="homeLogoLink2" class="logo">Stellar Fates</a>
+        <nav>
+            <ul>
+                <li><a href="#" id="todayReadingLink2">Today's Reading</a></li>
+                <li><a href="#" id="selectDateLink2">Select Date</a></li>
+                <li><a href="#" id="miniGamesLink2">Mini Games</a></li>
+                <li><a href="#" id="aboutLinkNav2">About</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content-box">
+      <div class="date-selection-area">
+          <h2 class="instruction">CHOOSE YOUR DATE OF INTEREST</h2>
+          <div class="moon-phase-display">
+              <span id="moonPhaseEmoji"></span>
+              <span id="moonPhaseName" class="moon-phase-name"></span>
+          </div>
+          <input type="text" id="date-picker" placeholder="Select a Date" readonly>
+          <button class="surprise-me-btn" id="surpriseMeBtn">SURPRISE ME!</button>
+      </div>
+      
+    </div>
+
+    <p class="footer-hint">Increase volume for immersive experience</p>
+  </section>
+
+  <section class="card-reading-section hidden fade-wrapper">
+    <div class="header">
+        <a href="#" id="homeLogoLink3" class="logo">Stellar Fates</a>
+        <nav>
+            <ul>
+                <li><a href="#" id="todayReadingLink3">Today's Reading</a></li>
+                <li><a href="#" id="selectDateLink3">Select Date</a></li>
+                <li><a href="#" id="miniGamesLink3">Mini Games</a></li>
+                <li><a href="#" id="aboutLinkNav3">About</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content-box">
+      <div class="card-area">
+          <p class="instruction" id="currentDateInstruction"></p> 
+          <p class="instruction" id="drawInstruction">DRAW THREE CARDS THAT CALL OUT TO YOU</p>
+          <button class="deck" id="shuffleDeckBtn">SHUFFLE THE DECK</button>
+          <div class="card-container" id="cardContainer">
+              </div>
+          <button class="reveal-button" id="revealButton">REVEAL FATE</button>
+      </div>
+    </div>
+    <p class="footer-hint">Increase volume for immersive experience</p>
+  </section>
+
+  <section id="mini-games-section" class="hidden fade-wrapper">
+    <div class="header">
+      <a href="#" id="homeLogoLink5" class="logo">Stellar Fates</a>
+      <nav>
+          <ul>
+              <li><a href="#" id="todayReadingLink5">Today's Reading</a></li>
+              <li><a href="#" id="selectDateLink5">Select Date</a></li>
+              <li><a href="#" id="miniGamesLink5">Mini Games</a></li>
+              <li><a href="#" id="aboutLinkNav5">About</a></li>
+          </ul>
+      </nav>
+    </div>
+
+    <div class="mini-games-menu">
+        <h2 class="subheading">Choose Your Cosmic Challenge</h2>
+        <div class="game-selection-buttons">
+            <button id="play-celestial-match-btn" class="game-select-btn">Celestial Match</button>
+            <button id="play-intuition-test-btn" class="game-select-btn">Intuition Test</button>
+            <button id="play-word-scramble-btn" class="game-select-btn">Oracle's Word Scramble</button>
+        </div>
+        <button id="back-to-home-from-games" class="btn-primary">Back to Home</button>
+    </div>
+
+    <div id="celestial-match-game" class="game-container hidden">
+        <h2 class="game-title">Celestial Match</h2>
+        <p class="game-instructions">Memorize the cards and match the pairs!</p>
+        <div class="match-grid">
+            </div>
+        <div class="game-controls">
+            <p>Pairs Matched: <span id="match-score">0</span> / <span id="total-pairs"></span></p>
+            <button id="reset-match-btn" class="btn-secondary">Reset Game</button>
+            <button id="back-to-menu-from-match" class="btn-secondary">Back to Menu</button>
+        </div>
+        <div id="match-game-outcome" class="game-outcome hidden">
+            <h3>Congratulations!</h3>
+            <p>You matched all pairs in <span id="time-taken"></span> seconds!</p>
+            <button id="play-again-match-btn" class="btn-primary">Play Again</button>
+        </div>
+    </div>
+
+    <div id="intuition-test-game" class="game-container hidden">
+        <h2 class="game-title">Intuition Test</h2>
+        <p class="game-instructions">Trust your gut. Find the lucky star!</p>
+        <div class="intuition-cards">
+            </div>
+        <div id="intuition-game-outcome" class="game-outcome hidden">
+            </div>
+        <div class="game-controls">
+            <button id="play-again-intuition-btn" class="btn-primary hidden">Play Again</button>
+            <button id="back-to-menu-from-intuition" class="btn-secondary">Back to Menu</button>
+        </div>
+    </div>
+
+
+    <div id="word-scramble-game" class="game-container hidden">
+        </div>
+
+    <div class="footer-hint">© 2025 Stellar Fates. All rights reserved.</div>
+</section>
+
+  <section class="about-section hidden fade-wrapper">
+    <div class="header">
+        <a href="#" id="homeLogoLink4" class="logo">Stellar Fates</a>
+        <nav>
+            <ul>
+                <li><a href="#" id="todayReadingLink4">Today's Reading</a></li>
+                <li><a href="#" id="selectDateLink4">Select Date</a></li>
+                <li><a href="#" id="miniGamesLink4">Mini Games</a></li>
+                <li><a href="#" id="aboutLinkNav4">About</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content-box">
+        <h2 class="about-heading">ABOUT</h2>
+        <p class="about-description">
+            Stellar Fates is a cosmic tarot-inspired experience that blends real space history with symbolic storytelling. Each time you visit, you’re invited to enter a date like your birthday or a random moment, and receive a three-card “fate reading” that reveals actual astronomical events that occurred on or near that day.
+            <br><br>
+            Each card represents a cosmic archetype:
+            <br>
+            <span class="archetype-highlight">The Awakening</span> - discoveries and beginnings
+            <br>
+            <span class="archetype-highlight">The Eclipse</span> - challenges and failures
+            <br>
+            <span class="archetype-highlight">The Echo</span> - legacies and lasting impact
+            <br><br>
+            With each draw, you’ll uncover poetic interpretations, visuals, and a deeper sense of connection to the universe. Beyond readings, the experience includes mini-games and ambient interactions to make space history feel alive, personal, and unforgettable.
+        </p>
+
+        <div class="image-carousel">
+            <div class="carousel-track" id="carouselTrack">
+                <img src="assets/carousel1.jpg" alt="Galaxy" class="carousel-img active">
+                <img src="assets/carousel2.jpg" alt="Nebula" class="carousel-img">
+                <img src="assets/carousel3.png" alt="Astronaut" class="carousel-img">
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-btn prev-btn">&lt;</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+                <button class="carousel-btn next-btn">&gt;</button>
+            </div>
+        </div>
+
+        <button class="discover-reading-btn" id="discoverReadingBtn">DISCOVER YOUR READING</button>
+    </div>
+
+    <p class="footer-hint">Increase volume for immersive experience</p>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+  <script src="script.js?v=horizontal_reveal_20250704_1"></script> 
+</body>
+</html>
