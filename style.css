@@ -549,7 +549,7 @@ nav a:hover {
 }
 
 .card-front {
-  background-image: url('assets/card.jpg');
+  background-image: url('card.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1157,7 +1157,7 @@ nav a:hover {
 
 .match-card-front {
     background-color: #3a2a51; /* Dark purple/blue */
-    background-image: url('assets/game_card_back.jpg');
+    background-image: url('game_card_back.jpg');
     background-size: cover;
     background-position: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
